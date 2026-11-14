@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Fairdien — To-do & Reminders",
+  "short_name": "Fairdien",
+  "description": "A calm, minimal to-do list with timely Chrome reminders.",
+  "version": "1.2.0",
+  "permissions": ["storage", "alarms", "notifications"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Fairdien",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

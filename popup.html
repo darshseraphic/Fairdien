@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Fairdien</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#main" aria-label="Fairdien home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="m6.5 12.4 3.55 3.55L17.8 8.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="brand-name">Fairdien</span>
+      </a>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Appearance: System. Click to change." title="Appearance: System. Click to change.">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none">
+          <rect x="3.5" y="4" width="17" height="12.5" rx="2" stroke="currentColor" stroke-width="1.7"/>
+          <path d="M8 20h8m-4-3.5V20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </header>
+
+    <main id="main" class="main-content">
+      <section class="composer-card" aria-labelledby="create-heading">
+        <div class="section-heading-row">
+          <h2 id="create-heading">Create a task</h2>
+          <span class="step-mark" aria-hidden="true">＋</span>
+        </div>
+        <form id="task-form" novalidate>
+          <label class="field-label" for="task-title">WHAT NEEDS TO GET DONE?</label>
+          <input id="task-title" name="title" class="text-field" type="text" maxlength="180" placeholder="e.g. Send the project update" autocomplete="off" required>
+          <div class="reminder-field">
+            <div class="reminder-label-row">
+              <div class="field-label">REMINDER <span class="optional-label">OPTIONAL</span></div>
+              <button id="clear-reminder" class="clear-time-button" type="button" hidden>Clear time</button>
+            </div>
+            <div class="time-picker" role="group" aria-label="Choose reminder time">
+              <span class="time-picker-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/>
+                  <path d="M12 7v5l3 1.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <div class="time-selects">
+                <label class="sr-only" for="reminder-hour">Hour</label>
+                <span class="time-select-wrap">
+                  <select id="reminder-hour" class="time-select" aria-label="Hour">
+                    <option value="">HH</option>
+                  </select>
+                </span>
+                <span class="time-colon" aria-hidden="true">:</span>
+                <label class="sr-only" for="reminder-minute">Minute</label>
+                <span class="time-select-wrap">
+                  <select id="reminder-minute" class="time-select" aria-label="Minute">
+                    <option value="">MM</option>
+                  </select>
+                </span>
+                <label class="sr-only" for="reminder-period">AM or PM</label>
+                <span class="time-select-wrap period-wrap">
+                  <select id="reminder-period" class="time-select" aria-label="AM or PM">
+                    <option value="">AM/PM</option>
+                    <option value="AM">AM</option>
+                    <option value="PM">PM</option>
+                  </select>
+                </span>
+              </div>
+            </div>
+            <input id="reminder-time" name="reminderTime" type="hidden" value="">
+            <p class="field-hint">Choose a time for your notification. Past times are scheduled for tomorrow.</p>
+          </div>
+          <div class="form-actions">
+            <button id="cancel-edit" class="button button-secondary cancel-button" type="button" hidden>Cancel</button>
+            <button id="submit-task" class="button button-primary" type="submit">
+              <span id="submit-label">Create task</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none">
+                <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <p id="form-error" class="form-error" role="alert" hidden></p>
+        </form>
+      </section>
+
+      <section class="tasks-section" aria-labelledby="tasks-heading">
+        <div class="tasks-heading-row">
+          <div>
+            <p class="eyebrow section-eyebrow">YOUR SPACE</p>
+            <div class="tasks-title-line">
+              <h2 id="tasks-heading">Your tasks</h2>
+              <span id="open-count" class="count-pill">0</span>
+            </div>
+          </div>
+          <span id="list-summary" class="list-summary">0 OPEN</span>
+        </div>
+
+        <div class="filter-row" role="group" aria-label="Filter tasks">
+          <button class="filter-button is-active" type="button" data-filter="active" aria-pressed="true">To do</button>
+          <button class="filter-button" type="button" data-filter="all" aria-pressed="false">All</button>
+          <button class="filter-button" type="button" data-filter="completed" aria-pressed="false">Completed</button>
+        </div>
+
+        <div id="task-list" class="task-list" aria-live="polite" aria-relevant="additions removals text"></div>
+        <div id="empty-state" class="empty-state">
+          <span class="empty-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="m6.5 12.4 3.55 3.55L17.8 8.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <p class="empty-title">Nothing on your list.</p>
+          <p class="empty-copy">Add a task above and give your day a little direction.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span class="footer-dot" aria-hidden="true"></span>
+      <span>Your tasks stay on this device</span>
+      <span class="footer-version">Fairdien · 1.2</span>
+    </footer>
+    <div id="live-status" class="sr-only" role="status" aria-live="polite"></div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
